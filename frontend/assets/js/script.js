@@ -14,6 +14,7 @@ fileInput.addEventListener("change", function (e) {
 function handleFileSelect(file) {
     if (!file) return;
 
+    hideError(); // Hide any previous error
     selectedFile = file;
 
     const reader = new FileReader(); // Browser API to read the file
@@ -30,6 +31,9 @@ function handleFileSelect(file) {
 /// Handle "Classify Image" button click
 async function classifyImage() {
     if (!selectedFile) return;
+
+    hideError(); // Hide any previous error
+    showLoading(); // Show loading indicator
 
     //? Preprocess the image for sending to the backend
     const formData = new FormData();
@@ -51,13 +55,72 @@ async function classifyImage() {
         }
     } catch (error) {
         alert("Error: " + error.message);
+    } finally {
+        hideLoading(); // Turn off loading indicator after the request is done
     }
 }
 
-function showResults(result) {
-    const resultsContainer = document.getElementById("resultsContainer");
-    const predictionElement = document.getElementById("prediction");
+function showResults(data) {
+    const { final_result, predictions } = data;
 
-    predictionElement.textContent = result.prediction;
-    resultsContainer.style.display = "block";
+    const predictionElement = document.getElementById("prediction");
+    predictionElement.textContent = final_result.label;
+    predictionElement.className = `prediction ${final_result.label.toLowerCase()}`;
+
+    const confidenceFill = document.getElementById("confidenceFill");
+    confidenceFill.style.width = `${final_result.probability * 100}%`;
+    confidenceFill.className = `confidence-fill ${final_result.label.toLowerCase()}`;
+
+    document.getElementById("confidence").textContent = `Confidence: ${(
+        final_result.probability * 100
+    ).toFixed(1)}%`;
+
+    const detailsList = document.getElementById("detailsList");
+    detailsList.innerHTML = ""; // Delete all previous items
+    predictions.forEach((pred) => {
+        const item = document.createElement("div");
+        item.className = "detail-item";
+        item.innerHTML = `
+            <span>${pred.label}</span>
+            <span>${(pred.probability * 100).toFixed(1)}%</span>
+        `;
+        detailsList.appendChild(item);
+    });
+
+    document.getElementById("resultsContainer").style.display = "block";
+    document.getElementById("resetBtn").style.display = "inline-block";
+}
+
+/// Reset the classifier
+function resetClassifier() {
+    selectedFile = null;
+    document.getElementById("previewContainer").style.display = "none";
+    document.getElementById("fileInput").value = "";
+
+    document.getElementById("resultsContainer").style.display = "none";
+    document.getElementById("resetBtn").style.display = "none";
+    hideError();
+}
+
+/// Enhance UI/UX
+function showLoading() {
+    document.getElementById("loading").style.display = "flex";
+    document.getElementById("classifyBtn").disabled = true; // Avoid spam
+}
+
+function hideLoading() {
+    document.getElementById("loading").style.display = "none";
+    document.getElementById("classifyBtn").disabled = false;
+}
+
+function showError(message) {
+    const errorElement = document.getElementById("error");
+    errorElement.textContent = message;
+    errorElement.style.display = "block";
+}
+
+function hideError() {
+    const errorElement = document.getElementById("error");
+    errorElement.textContent = "";
+    errorElement.style.display = "none";
 }
