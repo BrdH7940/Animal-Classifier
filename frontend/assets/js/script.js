@@ -26,3 +26,38 @@ function handleFileSelect(file) {
 
     reader.readAsDataURL(file); // Read the file as a data URL
 }
+
+/// Handle "Classify Image" button click
+async function classifyImage() {
+    if (!selectedFile) return;
+
+    //? Preprocess the image for sending to the backend
+    const formData = new FormData();
+    formData.append("file", selectedFile);
+
+    //? Send the image to the backend
+    try {
+        const response = await fetch("http://127.0.0.1:5000/classify", {
+            method: "POST",
+            body: formData,
+        });
+
+        const result = await response.json();
+
+        if (response.ok) {
+            showResults(result);
+        } else {
+            alert(result.error || "Classification failed");
+        }
+    } catch (error) {
+        alert("Error: " + error.message);
+    }
+}
+
+function showResults(result) {
+    const resultsContainer = document.getElementById("resultsContainer");
+    const predictionElement = document.getElementById("prediction");
+
+    predictionElement.textContent = result.prediction;
+    resultsContainer.style.display = "block";
+}
