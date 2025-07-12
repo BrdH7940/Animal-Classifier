@@ -14,12 +14,35 @@ A web application that classifies uploaded images into three categories: **Dog**
 ## Project Structure
 
 ```
-CNN-From-Scratch/
+ai-pet-classifier/
+├── backend/
+│   ├── ai_service/
+│   │   ├── __init__.py         # Application Factory (create_app)
+│   │   ├── api/
+│   │   │   ├── __init__.py
+│   │   │   └── classification.py # Blueprint for endpoint /classify
+│   │   ├── services/
+│   │   │   └── classification_service.py # Main logic
+│   │   └── utils/
+│   │       └── image_processor.py
+│   ├── models/
+│   │   └── model_loader.py       # Install and load model
+│   ├── .flaskenv
+│   ├── config.py
+│   └── run.py                      # Server initialization
 │
-├── app.py                 # Flask backend application
-├── requirements.txt       # Python dependencies
-├── README.md             # Project documentation
-├── templates/
-│   └── index.html        # Frontend HTML template
-└── .gitignore           # Git ignore rules
+├── frontend/
+│   ├── index.html
+│   └── assets/
+│       ├── css/
+│       │   └── style.css
+│       └── js/
+│           ├── main.js
+│           └── api.js
+│
+├── docs/
+│   └── sequence_diagram.JPG
+│
+├── .gitignore
+└── README.md
 ```
