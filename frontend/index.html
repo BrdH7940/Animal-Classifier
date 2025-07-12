@@ -1,73 +1,73 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>CNN From Scratch</title>
-    <link rel="stylesheet" href="assets/css/style.css" />
-  </head>
-  <body>
-    <div class="container">
-      <h1>🐕🐱 Image Classifier</h1>
-      <p class="subtitle">
-        Upload an image to classify it as Dog, Cat, or Other
-      </p>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>CNN From Scratch</title>
+        <link rel="stylesheet" href="assets/css/style.css" />
+    </head>
+    <body>
+        <div class="container">
+            <h1>🐕🐱 Image Classifier</h1>
+            <p class="subtitle">
+                Upload an image to classify it as Dog, Cat, or Other
+            </p>
 
-      <div class="upload-area" id="uploadArea">
-        <div class="upload-icon">📁</div>
-        <div class="upload-text">Click to upload or drag and drop</div>
-        <div class="upload-subtext">PNG, JPG, GIF up to 16MB</div>
-      </div>
+            <div class="upload-area" id="uploadArea">
+                <div class="upload-icon">📁</div>
+                <div class="upload-text">Click to upload or drag and drop</div>
+                <div class="upload-subtext">PNG, JPG, GIF up to 16MB</div>
+            </div>
 
-      <input type="file" id="fileInput" accept="image/*" />
+            <input type="file" id="fileInput" accept="image/*" />
 
-      <button
-        class="btn"
-        onclick="document.getElementById('fileInput').click()"
-      >
-        Choose Image
-      </button>
+            <button
+                class="btn"
+                onclick="document.getElementById('fileInput').click()"
+            >
+                Choose Image
+            </button>
 
-      <div class="preview-container" id="previewContainer">
-        <img id="imagePreview" class="image-preview" alt="Preview" />
-        <br />
-        <button class="btn" id="classifyBtn" onclick="classifyImage()">
-          Classify Image
-        </button>
-      </div>
+            <div class="preview-container" id="previewContainer">
+                <img id="imagePreview" class="image-preview" alt="Preview" />
+                <br />
+                <button class="btn" id="classifyBtn" onclick="classifyImage()">
+                    Classify Image
+                </button>
+            </div>
 
-      <div class="loading" id="loading">
-        <div class="spinner"></div>
-        <span>Analyzing image...</span>
-      </div>
+            <div class="loading" id="loading">
+                <div class="spinner"></div>
+                <span>Analyzing image...</span>
+            </div>
 
-      <div class="error" id="error"></div>
+            <div class="error" id="error"></div>
 
-      <div class="results-container" id="resultsContainer">
-        <div class="result-card">
-          <div class="prediction" id="prediction"></div>
-          <div class="confidence" id="confidence"></div>
-          <div class="confidence-bar">
-            <div class="confidence-fill" id="confidenceFill"></div>
-          </div>
+            <div class="results-container" id="resultsContainer">
+                <div class="result-card">
+                    <div class="prediction" id="prediction"></div>
+                    <div class="confidence" id="confidence"></div>
+                    <div class="confidence-bar">
+                        <div class="confidence-fill" id="confidenceFill"></div>
+                    </div>
+                </div>
+
+                <div class="details" id="details">
+                    <h4>Detailed Analysis:</h4>
+                    <div id="detailsList"></div>
+                </div>
+            </div>
+
+            <button
+                class="btn"
+                id="resetBtn"
+                onclick="resetClassifier()"
+                style="display: none"
+            >
+                Classify Another Image
+            </button>
         </div>
 
-        <div class="details" id="details">
-          <h4>Detailed Analysis:</h4>
-          <div id="detailsList"></div>
-        </div>
-      </div>
-
-      <button
-        class="btn"
-        id="resetBtn"
-        onclick="resetClassifier()"
-        style="display: none"
-      >
-        Classify Another Image
-      </button>
-    </div>
-
-    <script src="assets/js/script.js"></script>
-  </body>
+        <script src="assets/js/script.js"></script>
+    </body>
 </html>
