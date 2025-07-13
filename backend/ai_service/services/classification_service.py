@@ -31,12 +31,15 @@ def get_prediction(model, image_bytes: bytes):
             cat_confidence = max(cat_confidence, confidence)
 
     # Reformat the predictions to be serializable into JSON
-    serializable_details = [[str(id), str(name), float(conf)] for id, name, conf in decoded_predictions]
+    serializable_details = [{"label": str(name), "probability": float(conf)} for id, name, conf in decoded_predictions]
 
     if dog_confidence > cat_confidence and dog_confidence > 0.1:
-        return {"prediction": "dog", "confidence": dog_confidence, "details": serializable_details}
+        final_result = {"label": "dog", "probability": float(dog_confidence)}
+        return {"final_result": final_result, "predictions": serializable_details}
     elif cat_confidence > 0.1:
-        return {"prediction": "cat", "confidence": cat_confidence, "details": serializable_details}
+        final_result = {"label": "cat", "probability": float(cat_confidence)}
+        return {"final_result": final_result, "predictions": serializable_details}
     else:
         top_prediction = decoded_predictions[0]
-        return {"prediction": "other", "confidence": float(top_prediction[2]), "details": serializable_details}
+        final_result = {"label": "other", "probability": float(top_prediction[2])}
+        return {"final_result": final_result, "predictions": serializable_details}

@@ -3,7 +3,7 @@ import numpy as np
 import tensorflow as tf
 
 def preprocess_image(image: Image.Image):
-    if image.model != "RGB":
+    if image.mode != "RGB":
         image = image.convert("RGB")
 
     image = image.resize((224, 224))
