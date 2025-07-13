@@ -12,7 +12,18 @@ fileInput.addEventListener("change", function (e) {
 });
 
 function handleFileSelect(file) {
+    s;
     if (!file) return;
+
+    if (file.size > 10 * 1024 * 1024) {
+        showError("File size exceeds 10MB limit");
+        return;
+    }
+
+    if (!file.type.startsWith("image/")) {
+        showError("Please select an image file");
+        return;
+    }
 
     hideError(); // Hide any previous error
     selectedFile = file;
@@ -124,3 +135,29 @@ function hideError() {
     errorElement.textContent = "";
     errorElement.style.display = "none";
 }
+
+/// Validation & Drag, Drop
+const uploadArea = document.getElementById("uploadArea");
+
+//? Drag file over the upload area
+uploadArea.addEventListener("dragover", function (e) {
+    e.preventDefault(); // Prevent default behavior (e.g., opening the file in the browser)
+    uploadArea.classList.add("dragover");
+});
+
+//? Drag file leave the upload area
+uploadArea.addEventListener("dragleave", function (e) {
+    e.preventDefault();
+    uploadArea.classList.remove("dragover");
+});
+
+//? Drop file on the upload area
+uploadArea.addEventListener("drop", function (e) {
+    e.preventDefault();
+    uploadArea.classList.remove("dragover");
+
+    const files = e.dataTransfer.files;
+    if (files.length > 0) {
+        handleFileSelect(files[0]);
+    }
+});
