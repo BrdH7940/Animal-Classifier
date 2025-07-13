@@ -12,7 +12,6 @@ fileInput.addEventListener("change", function (e) {
 });
 
 function handleFileSelect(file) {
-    s;
     if (!file) return;
 
     if (file.size > 10 * 1024 * 1024) {
