@@ -2,7 +2,7 @@ from flask import Blueprint, request, jsonify, current_app
 from ..services.classification_service import get_prediction
 from ..utils.image_processor import allowed_file
 
-# Create a Blueprint for the classification API
+# Create a Blueprint (API Endpoints) for the classification API
 classification_bp = Blueprint('classification', __name__)
 health_bp = Blueprint('health', __name__)
 
