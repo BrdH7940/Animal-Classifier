@@ -51,7 +51,7 @@ async function classifyImage() {
 
     //? Send the image to the backend
     try {
-        const response = await fetch("/api/classify", {
+        const response = await fetch("http://127.0.0.1:5000/api/classify", {
             method: "POST",
             body: formData,
         });
