@@ -1,8 +1,8 @@
 import os
 from flask import Flask
 from flask_cors import CORS
-from config import DevelopmentConfig
-from models.model_loader import load_classification_model
+from services.prediction_service.config import DevelopmentConfig
+from services.prediction_service.models.model_loader import load_classification_model
 
 def create_app(config_object=DevelopmentConfig):
     app = Flask(__name__) # Create process, socket and every essential things for the app to run locally
