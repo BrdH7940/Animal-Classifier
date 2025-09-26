@@ -1,4 +1,4 @@
-from ai_service import create_app
+from services.prediction_service.ai_service import create_app
 
 app = create_app()
 
